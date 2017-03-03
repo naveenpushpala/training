@@ -89,13 +89,49 @@ public class AddressRepository {
 		address.setZip(results.getString("zip"));
 		return address;
 	}
-	public void create(Address address){
+	public void create(Address address) throws SQLException{
+		Connection connection = ds.getConnection();
 		
+		Statement statement = connection.createStatement();
+		
+		statement.executeUpdate("insert into address(street,city,state,zip) values('" +address.getStreet() +"','"+address.getCity() + "','" +address.getState() +"','" +address.getZip()+"')",Statement.RETURN_GENERATED_KEYS);
+		
+		ResultSet generatedKeys = statement.getGeneratedKeys();
+		
+		address.setId(generatedKeys.getLong("id"));
+		
+		statement.close();
+		
+		connection.close();
 		
 	}
 	
-	public void delete(Address address){
+	
+	public void update(Address address) throws SQLException{
+	
+Connection connection = ds.getConnection();
 		
+		Statement statement = connection.createStatement();
+		
+		statement.executeUpdate("update address set street='" + address.getStreet() + "', city =" + address.getCity()
+				+ "', state=" + address.getState() + "',zip='" + address.getZip() + "' where id=" + address.getId());
+		ResultSet generatedKeys = statement.getGeneratedKeys();
+
+		address.setId(generatedKeys.getLong("id"));
+		
+		statement.close();
+		
+		connection.close();
+		
+	}
+	
+	public void delete(Address address) throws SQLException{
+		Connection connection = ds.getConnection();
+		Statement statement = connection.createStatement();
+		statement.executeUpdate("delete from address wherer id=" +address.getId());
+		statement.close();
+		connection.close();
 	}
 	
 }
+	
