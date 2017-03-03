@@ -2,6 +2,21 @@ package com.marakana.contacts.entities;
 
 public class Address{
 	private Long id;
+	private String street;
+	private String city;
+	private String state;
+	private String zip;
+	
+	public Address(){
+		
+	}
+	public Address(String street, String city, String state, String zip) {
+		super();
+		this.street = street;
+		this.city = city;
+		this.state = state;
+		this.zip = zip;
+	}
 	public Long getId() {
 		return id;
 	}
@@ -32,8 +47,5 @@ public class Address{
 	public void setZip(String zip) {
 		this.zip = zip;
 	}
-	private String street;
-	private String city;
-	private String state;
-	private String zip;
+	
 }
